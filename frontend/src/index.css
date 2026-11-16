@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   shadcn/ui design tokens (zinc theme) + component layer
+   Reference: https://ui.shadcn.com — components follow the official specs.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply bg-background;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* ------------------------------- Card ---------------------------------- */
+  .card {
+    @apply rounded-lg border bg-card text-card-foreground shadow-sm;
+  }
+  .card-header { @apply flex flex-col space-y-1.5 p-6; }
+  .card-title { @apply font-semibold leading-none tracking-tight; }
+  .card-description { @apply text-sm text-muted-foreground; }
+  .card-content { @apply p-6 pt-0; }
+  .card-footer { @apply flex items-center p-6 pt-0; }
+
+  /* ------------------------------ Button --------------------------------- */
+  /* Specs from shadcn/ui Button (default size h-9 px-4 py-2) */
+  .btn {
+    @apply inline-flex h-9 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm
+           font-medium transition-colors focus-visible:outline-none focus-visible:ring-1
+           focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50
+           [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .btn-primary   { @apply btn bg-primary text-primary-foreground shadow-sm hover:bg-primary/90; }
+  .btn-secondary { @apply btn bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80; }
+  .btn-danger    { @apply btn bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90; }
+  .btn-success   { @apply btn bg-emerald-600 text-white shadow-sm hover:bg-emerald-600/90; }
+  .btn-outline   { @apply btn border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground; }
+  .btn-ghost     { @apply btn hover:bg-accent hover:text-accent-foreground; }
+  .btn-link      { @apply btn text-primary underline-offset-4 hover:underline; }
+
+  /* Small icon-row buttons used in tables */
+  .btn-xs { @apply inline-flex h-7 items-center justify-center gap-1 whitespace-nowrap rounded-md px-2 text-xs font-medium transition-colors disabled:pointer-events-none disabled:opacity-50; }
+  .btn-xs-secondary { @apply btn-xs bg-secondary text-secondary-foreground hover:bg-secondary/80; }
+  .btn-xs-danger    { @apply btn-xs bg-destructive text-white hover:bg-destructive/90; }
+  .btn-xs-success   { @apply btn-xs bg-emerald-600 text-white hover:bg-emerald-600/90; }
+
+  /* ------------------------------- Input --------------------------------- */
+  .input {
+    @apply flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm
+           transition-colors placeholder:text-muted-foreground focus-visible:outline-none
+           focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed
+           disabled:opacity-50 file:border-0 file:bg-transparent;
+  }
+  select.input { @apply bg-background; }
+  textarea.input { @apply min-h-[60px] py-2; }
+  input[type="checkbox"] { @apply h-4 w-4 rounded border-input accent-zinc-900; }
+
+  .label { @apply mb-1.5 block text-sm font-medium leading-none text-foreground; }
+  .label-muted { @apply mb-1 block text-xs text-muted-foreground; }
+
+  /* ------------------------------- Table ---------------------------------- */
+  table.min-w-full { @apply w-full caption-bottom text-sm; }
+  .th {
+    @apply h-10 px-3 text-left align-middle text-xs font-medium tracking-wide text-muted-foreground uppercase;
+  }
+  .td {
+    @apply px-3 py-2.5 align-middle border-b border-border/60;
+  }
+  tbody tr { @apply transition-colors hover:bg-muted/50; }
+
+  /* ------------------------------ Badge ----------------------------------- */
+  .badge-base {
+    @apply inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-semibold transition-colors;
+  }
+
+  /* ------------------------------ Dialog ---------------------------------- */
+  .dialog-overlay {
+    @apply fixed inset-0 z-40 bg-black/80 animate-fade-in;
+  }
+  .dialog-content {
+    @apply fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4
+           rounded-lg border bg-background p-6 shadow-lg animate-zoom-in-95 max-h-[92vh] overflow-y-auto;
+  }
+  .dialog-header-title { @apply text-lg font-semibold leading-none tracking-tight; }
+  .dialog-close {
+    @apply absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity
+           hover:opacity-100 focus:outline-none text-xl leading-none;
+  }
+
+  /* ------------------------------ Misc UI --------------------------------- */
+  .stat-label { @apply text-sm font-medium text-muted-foreground; }
+  .stat-value { @apply mt-1 text-2xl font-semibold tracking-tight; }
+  .stat-hint { @apply mt-1 text-xs text-muted-foreground; }
+
+  .page-title { @apply text-2xl font-semibold tracking-tight; }
+  .page-subtitle { @apply text-sm text-muted-foreground mt-1; }
+
+  .section-title { @apply mb-3 text-sm font-semibold text-foreground; }
+}
+
+/* Scrollbar polish (subtle, like shadcn dashboard blocks) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { @apply rounded-full bg-border; }
+::-webkit-scrollbar-track { @apply bg-transparent; }
+
+@media print {
+  aside, .no-print { display: none !important; }
+}
